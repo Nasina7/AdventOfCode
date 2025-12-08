@@ -5,7 +5,7 @@ struct BadInput;
 
 impl std::fmt::Display for BadInput {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "invalid direction")
+        write!(f, "invalid input")
     }
 }
 
