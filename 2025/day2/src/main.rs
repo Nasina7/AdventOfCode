@@ -1,27 +1,50 @@
 use std::error::Error;
 
+#[derive(Debug, Clone)]
+struct BadInput;
+
+impl std::fmt::Display for BadInput {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "invalid direction")
+    }
+}
+
+impl Error for BadInput {}
+
 struct Aoc2025Day2 {
     ranges: Vec<(usize, usize)>,
 }
 
 impl Aoc2025Day2 {
     fn new(filename: &str) -> Result<Aoc2025Day2, Box<dyn Error>> {
+        let mut failure = false;
+
         let f: Vec<(usize, usize)> = std::fs::read_to_string(filename)?
             .split(',')
             .map(|rng| {
                 let tmp: Vec<usize> = rng
                     .trim()
                     .split('-')
-                    .map(|n| n.parse::<usize>().unwrap())
+                    .map(|n| {
+                        n.parse::<usize>().unwrap_or_else(|_| {
+                            failure = true;
+                            0
+                        })
+                    })
                     .collect();
 
                 if tmp.len() != 2 {
-                    panic!("Replace me with an error ret later. (TMP.LEN != 2)");
+                    failure = true;
+                    (0, 0)
+                } else {
+                    (tmp[0], tmp[1])
                 }
-
-                (tmp[0], tmp[1])
             })
             .collect();
+
+        if failure {
+            return Err(Box::new(BadInput));
+        }
 
         Ok(Aoc2025Day2 { ranges: f })
     }
