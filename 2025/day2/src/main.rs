@@ -98,8 +98,6 @@ impl Aoc2025Day2 {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut day2 = Aoc2025Day2::new("input.txt")?;
-
     day2.run()?;
-
     Ok(())
 }

@@ -62,9 +62,7 @@ impl Aoc2025Day3 {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let day3 = Aoc2025Day3::new("input.txt")?;
-
     day3.run();
-
     Ok(())
 }
 
